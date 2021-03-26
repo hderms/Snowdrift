@@ -5,6 +5,9 @@ pub struct Worker {
     pub machine_id: u16,
     pub last_timestamp: u128,
 }
+#[derive(Debug, Clone)]
+pub struct ClockGoingBackwards;
+
 impl Worker {
     pub fn new(machine_id: u16) -> Worker {
         let id = 0;
@@ -17,10 +20,13 @@ impl Worker {
         }
     }
 
-    pub fn next_id_and_timestamp(&mut self) -> (u64, u128) {
+    pub fn next_id_and_timestamp(&mut self) -> Result<(u64, u128), ClockGoingBackwards> {
         let now = Worker::get_current_timestamp_in_millis();
+        if self.last_timestamp > now {
+            return Err(ClockGoingBackwards);
+        }
         let sequence = self.next_id(now);
-        (sequence, now)
+        Ok((sequence, now))
     }
 
     fn duration_in_millis(ts: SystemTime) -> u128 {

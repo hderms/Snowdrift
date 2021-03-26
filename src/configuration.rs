@@ -3,7 +3,7 @@ const DEFAULT_PORT: u16 = 3000;
 const PORT_KEY: &str = "PORT";
 const MACHINE_ID_KEY: &str = "MACHINE_ID";
 pub struct Configuration {
-    pub port: u16, //the port to bind the server to
+    pub port: u16,       //the port to bind the server to
     pub machine_id: u16, //the machine ID which *must* be unique per-machine
 }
 

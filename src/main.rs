@@ -1,10 +1,10 @@
 use hyper::server::conn::AddrStream;
 use hyper::service::{make_service_fn, service_fn};
+use hyper::StatusCode;
 use hyper::{Body, Response, Server};
 use std::convert::Infallible;
 use std::net::SocketAddr;
 use std::sync::{Arc, Mutex};
-use hyper::StatusCode;
 
 //Internal modules
 pub mod worker;
@@ -39,7 +39,7 @@ async fn main() {
         async move {
             Ok::<_, Infallible>(service_fn(move |_req| {
                 let mut work = shared.lock().unwrap();
-                let (sequence, now) = work.next_id_and_timestamp();
+                let (sequence, now) = work.next_id_and_timestamp().unwrap();
 
                 let id = Id::new(now as u64, work.machine_id, sequence as u16);
                 create_id_response(id, sequence)
