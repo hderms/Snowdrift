@@ -4,9 +4,10 @@ Heavily borrows from the ideas in the (unfortunately defunct) Twitter [Snowflake
 
 ## Details
 id is composed of:
-time - 41 bits (millisecond precision from UNIX epoch, not very useful currently)
-configured machine id - 10 bits - gives us up to 1024 machines
-sequence number - 12 bits - rolls over every 4096 per machine (with protection to avoid rollover in the same ms)
+
+* time - 41 bits (millisecond precision from UNIX epoch, not very useful currently)
+* configured machine id - 10 bits - gives us up to 1024 machines
+* sequence number - 12 bits - rolls over every 4096 per machine (with protection to avoid rollover in the same ms)
 
 
 ## Why?
